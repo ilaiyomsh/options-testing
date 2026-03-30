@@ -1,0 +1,23 @@
+# Covered Call — Conservative
+strategy: covered_call
+ticker: AAPL
+
+backtest:
+  start: "2023-01-01"
+  end: "2024-01-01"
+  initial_capital: 100000
+  commission_per_contract: 0.65
+  data_dir: "data/processed"
+  output: "output_cc.html"
+
+data:
+  on_invalid_row: halt     # halt | skip_row | warn
+  on_missing_day: skip_day # halt | skip_day
+
+params:
+  target_dte: 30
+  dte_range: [20, 45]
+  target_delta: 0.30
+  delta_range: [0.20, 0.40]
+  profit_target: 0.50
+  min_open_interest: 100

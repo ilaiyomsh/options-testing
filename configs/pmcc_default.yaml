@@ -1,0 +1,24 @@
+# Poor Man's Covered Call — Conservative
+strategy: pmcc
+ticker: AAPL
+
+backtest:
+  start: "2023-01-01"
+  end: "2024-01-01"
+  initial_capital: 50000
+  commission_per_contract: 0.65
+  data_dir: "data/processed"
+  output: "output_pmcc.html"
+
+data:
+  on_invalid_row: halt
+
+params:
+  long_min_dte: 180
+  long_min_delta: 0.70
+  short_target_dte: 30
+  short_dte_range: [20, 45]
+  short_target_delta: 0.30
+  short_delta_range: [0.20, 0.40]
+  profit_target: 0.50
+  min_open_interest: 100
