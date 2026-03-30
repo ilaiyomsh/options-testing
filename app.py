@@ -230,19 +230,79 @@ if run_button:
         st.json(log_data)
 
 else:
-    # Landing state
+    # Landing state — guide
     st.markdown("---")
+
+    st.header("How to Use")
     st.markdown(
         """
-        ### How to use
-        1. **Choose a strategy** from the sidebar
-        2. **Configure** the backtest parameters
-        3. **Click "Run Backtest"** to see results
+        1. **Choose a strategy** from the sidebar on the left
+        2. **Set the backtest parameters** — ticker, date range, initial capital, and stock price
+        3. **Tune the strategy parameters** — delta targets, DTE ranges, profit targets, etc.
+        4. **Click "Run Backtest"** and wait a few seconds for the results
+        """
+    )
 
-        ### Available Strategies
-        - **Covered Call** — Buy 100 shares + sell 1 OTM call. Conservative income strategy.
-        - **Poor Man's Covered Call** — Buy deep ITM LEAPS + sell OTM short-term call. Lower capital requirement.
+    st.header("Understanding the Results")
+    st.markdown(
+        """
+        After running a backtest you will see:
 
-        *Data is synthetically generated using geometric Brownian motion and Black-Scholes pricing.*
+        - **Metrics cards** — Total return, P&L, max drawdown, and Sharpe ratio at a glance
+        - **Equity curve** — Your strategy's performance vs. a simple buy-and-hold, shown as percentage returns over time
+        - **Portfolio value chart** — The dollar value of your portfolio throughout the backtest period
+        - **Event log** — A summary of engine events (orders filled, rejected, expirations, etc.)
+        """
+    )
+
+    st.header("Available Strategies")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Covered Call")
+        st.markdown(
+            """
+            Buy 100 shares of the underlying stock and sell 1 OTM (out-of-the-money) call option against them.
+
+            **How it works:** You collect premium from the short call, which provides income and a small downside buffer.
+            If the stock rises above the strike, your shares get called away at the strike price.
+
+            **Best for:** Moderate bullish outlook, income generation.
+
+            **Key parameters:**
+            - *Target Delta* — How far OTM the short call is (lower = more conservative)
+            - *Target DTE* — Days to expiration for the short call
+            - *Profit Target* — Close early when this % of max profit is reached
+            """
+        )
+
+    with col2:
+        st.subheader("Poor Man's Covered Call")
+        st.markdown(
+            """
+            Buy 1 deep ITM LEAPS call (long-dated) and sell 1 OTM short-term call against it.
+
+            **How it works:** The LEAPS call acts as a stock substitute at a fraction of the cost.
+            You sell short-term calls against it to collect premium, similar to a covered call but with less capital.
+
+            **Best for:** Bullish outlook with limited capital.
+
+            **Key parameters:**
+            - *LEAPS Min Delta* — How deep ITM the long call is (higher = more stock-like)
+            - *LEAPS Min DTE* — Minimum days to expiration for the long leg
+            - *Short Target Delta / DTE* — Same as covered call for the short leg
+            """
+        )
+
+    st.header("About the Data")
+    st.markdown(
+        """
+        This app uses **synthetically generated market data** for backtesting.
+        Underlying prices are simulated using geometric Brownian motion (GBM),
+        and option prices are calculated using the Black-Scholes model with realistic
+        bid-ask spreads, open interest, and Greeks.
+
+        This means results are illustrative and useful for comparing strategies,
+        but do not represent real market conditions.
         """
     )
