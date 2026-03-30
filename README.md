@@ -65,6 +65,39 @@ configs/
 | Iron Condor | 🔵 Planned |
 | Custom (via BaseStrategy) | ✅ Ready |
 
+## Web App
+
+A Streamlit web interface is available for running backtests interactively.
+
+### Run locally
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+### Deploy to Streamlit Cloud
+
+The app is deployed on Streamlit Cloud and auto-redeploys on every push to `main`.
+
+1. Go to [share.streamlit.io](https://share.streamlit.io) and sign in with GitHub
+2. Select repo `ilaiyomsh/options-testing`, branch `main`, file `app.py`
+3. Click "Deploy"
+
+## Git & Deployment
+
+Repository: `git@github.com:ilaiyomsh/options-testing.git`
+
+To push changes (from project root):
+
+```bash
+git add -A
+git commit -m "Your commit message"
+git push
+```
+
+Streamlit Cloud will automatically redeploy after each push to `main`.
+
 ## License
 
 MIT
